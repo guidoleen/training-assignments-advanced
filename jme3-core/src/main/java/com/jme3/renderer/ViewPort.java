@@ -1,41 +1,10 @@
-/*
- * Copyright (c) 2009-2012 jMonkeyEngine
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are
- * met:
- *
- * * Redistributions of source code must retain the above copyright
- *   notice, this list of conditions and the following disclaimer.
- *
- * * Redistributions in binary form must reproduce the above copyright
- *   notice, this list of conditions and the following disclaimer in the
- *   documentation and/or other materials provided with the distribution.
- *
- * * Neither the name of 'jMonkeyEngine' nor the names of its contributors
- *   may be used to endorse or promote products derived from this software
- *   without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+
 package com.jme3.renderer;
 
 import com.jme3.math.ColorRGBA;
 import com.jme3.post.SceneProcessor;
 import com.jme3.renderer.queue.RenderQueue;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.Spatial;
 import com.jme3.texture.FrameBuffer;
 import com.jme3.util.SafeArrayList;
 import java.util.List;
@@ -68,7 +37,7 @@ public class ViewPort {
     protected final String name;
     protected final Camera cam;
     protected final RenderQueue queue = new RenderQueue();
-    protected final SafeArrayList<Spatial> sceneList = new SafeArrayList<Spatial>(Spatial.class);
+    protected final SafeArrayList<IEnvironmentFactory> sceneList = new SafeArrayList<IEnvironmentFactory>(Spatial.class);
     protected final SafeArrayList<SceneProcessor> processors = new SafeArrayList<SceneProcessor>(SceneProcessor.class);
     protected FrameBuffer out = null;
 
@@ -298,7 +267,7 @@ public class ViewPort {
      * 
      * @see Spatial
      */
-    public void attachScene(Spatial scene){
+    public void attachScene(IEnvironmentFactory scene){
         if (scene == null) {
             throw new IllegalArgumentException( "Scene cannot be null." );
         }
@@ -315,7 +284,7 @@ public class ViewPort {
      * 
      * @see #attachScene(com.jme3.scene.Spatial) 
      */
-    public void detachScene(Spatial scene){
+    public void detachScene(IEnvironmentFactory scene){
         if (scene == null) {
             throw new IllegalArgumentException( "Scene cannot be null." );
         }
@@ -341,7 +310,7 @@ public class ViewPort {
      * 
      * @see #attachScene(com.jme3.scene.Spatial) 
      */
-    public SafeArrayList<Spatial> getScenes(){
+    public SafeArrayList<IEnvironmentFactory> getScenes(){
         return sceneList;
     }
 
@@ -377,7 +346,7 @@ public class ViewPort {
      * rendering. By default all ViewPorts are enabled.
      * 
      * @param enable If the viewport should be disabled or enabled.
-     */
+     */ 
     public void setEnabled(boolean enable) {
         this.enabled = enable;
     }
@@ -392,3 +361,4 @@ public class ViewPort {
     }
 
 }
+ 
